@@ -19,20 +19,22 @@ model UserExample {
 
 model Chat {
   id         Int      @id @default(autoincrement())
-  senderId   String
-  receiverId String
+  senderId   Int
+  receiverId Int
+  message    String
   sender     User     @relation("sender", fields: [senderId], references: [id])
   receiver   User     @relation("receiver", fields: [receiverId], references: [id])
   date       DateTime @default(now())
 }
 
 model User {
-  id           String         @id
+  id           Int            @id @default(autoincrement())
   username     String         @unique
-  password     String
-  name         String
   sender       Chat[]         @relation("receiver")
   receiver     Chat[]         @relation("sender")
+  ownerId      Int?
+  owner        User?          @relation("OwnerContacts", fields: [ownerId], references: [id])
+  contacts     User[]         @relation("OwnerContacts")
   Notification Notification[]
 }
 
@@ -45,8 +47,8 @@ model Composer {
 model Notification {
   id     Int      @id @default(autoincrement())
   log    String
-  userId String
+  userId Int
   user   User     @relation(fields: [userId], references: [id])
   date   DateTime @default(now())
-  read   Boolean
+  read   Boolean  @default(false)
 }
