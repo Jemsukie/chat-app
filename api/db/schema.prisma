@@ -28,14 +28,18 @@ model Chat {
 }
 
 model User {
-  id           Int            @id @default(autoincrement())
-  username     String         @unique
-  sender       Chat[]         @relation("receiver")
-  receiver     Chat[]         @relation("sender")
-  ownerId      Int?
-  owner        User?          @relation("OwnerContacts", fields: [ownerId], references: [id])
-  contacts     User[]         @relation("OwnerContacts")
-  Notification Notification[]
+  id                  Int            @id @default(autoincrement())
+  username            String         @unique
+  sender              Chat[]         @relation("receiver")
+  receiver            Chat[]         @relation("sender")
+  ownerId             Int?
+  owner               User?          @relation("OwnerContacts", fields: [ownerId], references: [id])
+  contacts            User[]         @relation("OwnerContacts")
+  Notification        Notification[]
+  hashedPassword      String
+  salt                String
+  resetToken          String?
+  resetTokenExpiresAt DateTime?
 }
 
 model Composer {

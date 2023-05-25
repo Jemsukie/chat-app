@@ -1,12 +1,10 @@
-import type { UsersQuery } from 'types/graphql'
-
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
 
 export const QUERY = gql`
   query UsersQuery {
     users {
       id
-      name
+      username
     }
   }
 `
@@ -19,7 +17,7 @@ export const Failure = ({ error }: CellFailureProps) => (
   <div style={{ color: 'red' }}>Error: {error?.message}</div>
 )
 
-export const Success = ({ users }: CellSuccessProps<UsersQuery>) => {
+export const Success = ({ users }: CellSuccessProps) => {
   return (
     <ul>
       {users.map((item) => {

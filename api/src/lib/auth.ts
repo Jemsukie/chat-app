@@ -1,4 +1,3 @@
-import type { Decoded } from '@redwoodjs/api'
 import { AuthenticationError, ForbiddenError } from '@redwoodjs/graphql-server'
 
 import { db } from './db'
@@ -20,14 +19,10 @@ import { db } from './db'
  * fields to the `select` object below once you've decided they are safe to be
  * seen if someone were to open the Web Inspector in their browser.
  */
-export const getCurrentUser = async (session: Decoded) => {
-  if (!session || typeof session.id !== 'number') {
-    throw new Error('Invalid session')
-  }
-
+export const getCurrentUser = async (session) => {
   return await db.user.findUnique({
     where: { id: session.id },
-    select: { id: true },
+    select: { id: true, username: true },
   })
 }
 
@@ -77,9 +72,11 @@ export const hasRole = (roles: AllowedRoles): boolean => {
       return currentUserRoles?.some((allowedRole) =>
         roles.includes(allowedRole)
       )
-    } else if (typeof currentUserRoles === 'string') {
+    } else if (typeof context.currentUser.roles === 'string') {
       // roles to check is an array, currentUser.roles is a string
-      return roles.some((allowedRole) => currentUserRoles === allowedRole)
+      return roles.some(
+        (allowedRole) => context.currentUser?.roles === allowedRole
+      )
     }
   }
 
@@ -101,7 +98,7 @@ export const hasRole = (roles: AllowedRoles): boolean => {
  *
  * @see https://github.com/redwoodjs/redwood/tree/main/packages/auth for examples
  */
-export const requireAuth = ({ roles }: { roles?: AllowedRoles } = {}) => {
+export const requireAuth = ({ roles }: { roles: AllowedRoles }) => {
   if (!isAuthenticated()) {
     throw new AuthenticationError("You don't have permission to do that.")
   }
