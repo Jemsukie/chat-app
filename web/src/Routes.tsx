@@ -15,17 +15,17 @@ import MainLayout from './layouts/MainLayout/MainLayout'
 const Routes = () => {
   return (
     <Router useAuth={useAuth}>
-      <Route path="/login" page={LoginPage} name="login" />
-      <Route path="/signup" page={SignupPage} name="signup" />
-      <Route path="/forgot-password" page={ForgotPasswordPage} name="forgotPassword" />
-      <Route path="/reset-password" page={ResetPasswordPage} name="resetPassword" />
-      <Private unauthenticated="login">
-        <Set wrap={MainLayout}>
+      <Set wrap={MainLayout}>
+        <Route path="/login" page={LoginPage} name="login" />
+        <Route path="/signup" page={SignupPage} name="signup" />
+        <Route path="/forgot-password" page={ForgotPasswordPage} name="forgotPassword" />
+        <Route path="/reset-password" page={ResetPasswordPage} name="resetPassword" />
+        <Private unauthenticated="login">
           <Route path="/users" page={UsersPage} name="users" />
           <Route path="/" page={HomePage} name="home" />
-        </Set>
-      </Private>
-      <Route notfound page={NotFoundPage} />
+        </Private>
+        <Route notfound page={NotFoundPage} />
+      </Set>
     </Router>
   )
 }

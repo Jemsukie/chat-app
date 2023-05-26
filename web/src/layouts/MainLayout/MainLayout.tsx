@@ -5,7 +5,7 @@ type MainLayoutProps = {
 }
 
 const MainLayout = ({ children }: MainLayoutProps) => {
-  const { logOut } = useAuth()
+  const { logOut, isAuthenticated } = useAuth()
 
   const logOff = () => {
     if (confirm('Are you sure to logout?')) {
@@ -16,7 +16,9 @@ const MainLayout = ({ children }: MainLayoutProps) => {
   return (
     <>
       <div className="drawer">
-        <input id="my-drawer" type="checkbox" className="drawer-toggle" />
+        {isAuthenticated && (
+          <input id="my-drawer" type="checkbox" className="drawer-toggle" />
+        )}
         <div className="drawer-content">
           {/* <!-- Page content here --> */}
           <Navbar />
@@ -24,23 +26,25 @@ const MainLayout = ({ children }: MainLayoutProps) => {
           {/* <!-- Page content here --> */}
         </div>
 
-        <div className="drawer-side">
-          <label htmlFor="my-drawer" className="drawer-overlay">
-            {''}
-          </label>
+        {isAuthenticated && (
+          <div className="drawer-side">
+            <label htmlFor="my-drawer" className="drawer-overlay">
+              {''}
+            </label>
 
-          <div className="menu w-80 bg-neutral-focus p-4 text-white">
-            <ul>
-              {/* <!-- Sidebar content here --> */}
-              <li>
-                <button>Sidebar Item 1</button>
-              </li>
-              <li>
-                <button onClick={logOff}>Logout</button>
-              </li>
-            </ul>
+            <div className="menu w-80 bg-neutral-focus p-4 text-white">
+              <ul>
+                {/* <!-- Sidebar content here --> */}
+                <li>
+                  <button>Sidebar Item 1</button>
+                </li>
+                <li>
+                  <button onClick={logOff}>Logout</button>
+                </li>
+              </ul>
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </>
   )
@@ -66,15 +70,24 @@ const MenuIcon = () => {
 }
 
 const Navbar = () => {
+  const { isAuthenticated } = useAuth()
   return (
-    <div className="navbar bg-primary text-white">
-      <div className="navbar-start">
-        <label className="btn-ghost btn-circle btn" htmlFor="my-drawer">
-          <MenuIcon />
-        </label>
-      </div>
-      <div className="navbar-center">
-        <button className="btn-ghost btn text-xl normal-case">Chat App</button>
+    <div className="navbar  bg-primary text-white">
+      <div className="flex w-full">
+        <div className="flex w-full justify-start">
+          {isAuthenticated && (
+            <div>
+              <label className="btn-ghost btn-circle btn" htmlFor="my-drawer">
+                <MenuIcon />
+              </label>
+            </div>
+          )}
+        </div>
+        <div className="flex w-full justify-end">
+          <button className="btn-ghost btn text-xl normal-case">
+            Chat App
+          </button>
+        </div>
       </div>
     </div>
   )
