@@ -1,7 +1,7 @@
 import type { ComponentStory } from '@storybook/react'
 
-import { Loading, Empty, Failure, Success } from './UsersCell'
-import { standard } from './UsersCell.mock'
+import { Loading, Empty, Failure, Success } from './ContactsCell'
+import { standard } from './ContactsCell.mock'
 
 export const loading = () => {
   return Loading ? <Loading /> : <></>

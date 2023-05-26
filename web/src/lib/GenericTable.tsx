@@ -3,17 +3,17 @@ const GenericTable = ({ headers, data }) => {
     <table className="table-zebra table-compact mt-2 table w-full">
       <thead>
         <tr>
-          {headers.map((h) => {
-            return <th key={h}>{h}</th>
+          {headers.map((h, idx) => {
+            return <th key={idx}>{h}</th>
           })}
         </tr>
       </thead>
       <tbody>
-        {data.map((u) => {
+        {data.map((u, idx) => {
           return (
-            <tr key={u}>
+            <tr key={idx}>
               {headers.map((h) => {
-                return <td key={h}>{u[h]}</td>
+                return <td key={`${h}`}>{u[h]}</td>
               })}
             </tr>
           )

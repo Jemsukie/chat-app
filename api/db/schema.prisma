@@ -33,14 +33,21 @@ model User {
   name                String
   sender              Chat[]         @relation("receiver")
   receiver            Chat[]         @relation("sender")
-  ownerId             Int?
-  owner               User?          @relation("OwnerContacts", fields: [ownerId], references: [id])
-  contacts            User[]         @relation("OwnerContacts")
   Notification        Notification[]
   hashedPassword      String
   salt                String
   resetToken          String?
   resetTokenExpiresAt DateTime?
+  contactOwner        Contact[]      @relation("owner")
+  contactUser         Contact[]      @relation("user")
+}
+
+model Contact {
+  id      Int  @id @default(autoincrement())
+  ownerId Int
+  userId  Int
+  owner   User @relation("owner", fields: [ownerId], references: [id])
+  user    User @relation("user", fields: [userId], references: [id])
 }
 
 model Composer {

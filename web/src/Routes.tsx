@@ -21,6 +21,7 @@ const Routes = () => {
         <Route path="/forgot-password" page={ForgotPasswordPage} name="forgotPassword" />
         <Route path="/reset-password" page={ResetPasswordPage} name="resetPassword" />
         <Private unauthenticated="login">
+          <Route path="/add-contact" page={AddContactPage} name="addContact" />
           <Route path="/users" page={UsersPage} name="users" />
           <Route path="/" page={HomePage} name="home" />
         </Private>

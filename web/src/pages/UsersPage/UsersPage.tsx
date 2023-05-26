@@ -1,19 +1,17 @@
 import { MetaTags } from '@redwoodjs/web'
 
-import UsersCell from 'src/components/UsersCell'
+import ContactsCell from 'src/components/ContactsCell'
 
-const UsersPage = () => {
+const UsersPage = ({ page = 1 }) => {
   return (
     <>
       <MetaTags title="Users" description="Users page" />
 
-      <h1>UsersPage</h1>
-      <p>
-        Find me in <code>./web/src/pages/UsersPage/UsersPage.tsx</code>
-      </p>
-      <p>
-        <UsersCell />
-      </p>
+      <div className="flex justify-center">
+        <h1 className="text-xl">Contact List</h1>
+      </div>
+
+      <ContactsCell page={page} />
     </>
   )
 }

@@ -81,7 +81,7 @@ const MenuIcon = () => {
 }
 
 const Navbar = () => {
-  const { isAuthenticated } = useAuth()
+  const { isAuthenticated, currentUser } = useAuth()
   return (
     <div className="navbar  bg-primary text-white">
       <div className="flex w-full">
