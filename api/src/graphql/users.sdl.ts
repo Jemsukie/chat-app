@@ -8,5 +8,6 @@ export const schema = gql`
   type Query {
     users: [User!]! @skipAuth
     user(id: String!): User @skipAuth
+    searchUsers(searchTerm: String!): [User!]! @skipAuth
   }
 `

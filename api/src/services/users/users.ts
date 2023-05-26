@@ -9,3 +9,11 @@ export const user = ({ id }) => {
     where: { id },
   })
 }
+
+export const searchUsers = ({ searchTerm }) => {
+  return db.user.findMany({
+    where: {
+      name: { contains: searchTerm },
+    },
+  })
+}
