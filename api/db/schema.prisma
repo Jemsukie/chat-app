@@ -30,6 +30,7 @@ model Chat {
 model User {
   id                  Int            @id @default(autoincrement())
   username            String         @unique
+  name                String
   sender              Chat[]         @relation("receiver")
   receiver            Chat[]         @relation("sender")
   ownerId             Int?

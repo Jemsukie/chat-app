@@ -1,3 +1,5 @@
+import { navigate, routes } from '@redwoodjs/router'
+
 import { useAuth } from 'src/auth'
 
 type MainLayoutProps = {
@@ -36,7 +38,16 @@ const MainLayout = ({ children }: MainLayoutProps) => {
               <ul>
                 {/* <!-- Sidebar content here --> */}
                 <li>
-                  <button>Sidebar Item 1</button>
+                  <button
+                    onClick={() => {
+                      navigate(routes.users())
+                    }}
+                  >
+                    Contacts
+                  </button>
+                </li>
+                <li>
+                  <button>Chats</button>
                 </li>
                 <li>
                   <button onClick={logOff}>Logout</button>

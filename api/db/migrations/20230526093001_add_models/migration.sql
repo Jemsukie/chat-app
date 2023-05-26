@@ -22,6 +22,7 @@ CREATE TABLE "Chat" (
 CREATE TABLE "User" (
     "id" SERIAL NOT NULL,
     "username" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
     "ownerId" INTEGER,
     "hashedPassword" TEXT NOT NULL,
     "salt" TEXT NOT NULL,

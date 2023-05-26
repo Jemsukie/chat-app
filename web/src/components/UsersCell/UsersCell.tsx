@@ -4,6 +4,7 @@ export const QUERY = gql`
   query UsersQuery {
     users {
       id
+      name
       username
     }
   }

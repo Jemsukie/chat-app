@@ -16,13 +16,13 @@ const ForgotPasswordPage = () => {
     }
   }, [isAuthenticated])
 
-  const usernameRef = useRef<HTMLInputElement>(null)
+  const emailRef = useRef<HTMLInputElement>(null)
   useEffect(() => {
-    usernameRef?.current?.focus()
+    emailRef?.current?.focus()
   }, [])
 
-  const onSubmit = async (data: { username: string }) => {
-    const response = await forgotPassword(data.username)
+  const onSubmit = async (data: { email: string }) => {
+    const response = await forgotPassword(data.email)
 
     if (response.error) {
       toast.error(response.error)
@@ -56,26 +56,26 @@ const ForgotPasswordPage = () => {
                 <Form onSubmit={onSubmit} className="rw-form-wrapper">
                   <div className="text-left">
                     <Label
-                      name="username"
+                      name="email"
                       className="rw-label"
                       errorClassName="rw-label rw-label-error"
                     >
-                      Username
+                      Email
                     </Label>
                     <TextField
-                      name="username"
+                      name="email"
                       className="rw-input"
                       errorClassName="rw-input rw-input-error"
-                      ref={usernameRef}
+                      ref={emailRef}
                       validation={{
                         required: {
                           value: true,
-                          message: 'Username is required',
+                          message: 'Email is required',
                         },
                       }}
                     />
 
-                    <FieldError name="username" className="rw-field-error" />
+                    <FieldError name="email" className="rw-field-error" />
                   </div>
 
                   <div className="rw-button-group">
