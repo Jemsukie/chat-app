@@ -48,3 +48,20 @@ export const contactPage = async ({ page = 1 }) => {
     count: contacts.length,
   }
 }
+
+export const createContact = async ({ id }) => {
+  return await db.contact.create({
+    data: {
+      ownerId: context.currentUser.id,
+      userId: id,
+    },
+  })
+}
+
+export const deleteContact = async ({ id }) => {
+  return await db.contact.delete({
+    where: {
+      id,
+    },
+  })
+}

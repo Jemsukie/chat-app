@@ -12,7 +12,7 @@ const Pagination = ({ headers, data, link, count }) => {
         <button
           className="btn-ghost btn-sm btn"
           onClick={() => {
-            navigate(routes[link]({ page: i + 1 }))
+            navigate(routes[link]({ page: i + 1 }), { replace: true })
           }}
         >
           {i + 1}

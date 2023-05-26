@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useState } from 'react'
 
-import { useQuery } from '@redwoodjs/web'
-import { toast } from '@redwoodjs/web/dist/toast'
+import { navigate, routes } from '@redwoodjs/router'
+import { useMutation, useQuery } from '@redwoodjs/web'
+import { toast } from '@redwoodjs/web/toast'
 
 import GenericTable from 'src/lib/GenericTable'
 
@@ -11,6 +12,14 @@ const SEARCH_CONTACTS_QUERY = gql`
       id
       name
       username
+    }
+  }
+`
+
+const CREATE_CONTACT_MUTATION = gql`
+  mutation CreateContactMutation($id: Int!) {
+    createContact(id: $id) {
+      id
     }
   }
 `
@@ -29,11 +38,33 @@ const AddContact = () => {
     variables: { searchTerm },
   })
 
+  const [createContact] = useMutation(CREATE_CONTACT_MUTATION, {
+    onCompleted: async () => {
+      toast.success(`Successfully Added!`)
+      navigate(routes.users())
+    },
+    onError: (error) => {
+      toast.error(error.message)
+    },
+  })
+
   useEffect(() => {
     if (term === '') {
       setSearchTerm('')
     }
   }, [term])
+
+  const onSearch = () => {
+    setSearchTerm(term)
+  }
+
+  const onAddContact = ({ id, name }) => {
+    if (confirm(`Add ${name} to contacts?`)) {
+      createContact({
+        variables: { id: parseInt(id) },
+      })
+    }
+  }
 
   const users = useMemo(
     () =>
@@ -55,16 +86,23 @@ const AddContact = () => {
             return {
               ...u,
               name: highlightedName,
-              actions: <button className="btn-primary btn-sm btn">Add</button>,
+              actions: (
+                <button
+                  className="btn-primary btn-sm btn"
+                  onClick={() => {
+                    console.log(u.id)
+                    const { name, id } = u
+                    onAddContact({ name, id })
+                  }}
+                >
+                  Add
+                </button>
+              ),
             }
           }),
     [data, searchTerm]
   )
   const headers = ['name', 'actions']
-
-  const onSearch = () => {
-    setSearchTerm(term)
-  }
 
   return (
     <div className="flex w-full justify-center">

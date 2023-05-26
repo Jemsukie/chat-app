@@ -1,5 +1,6 @@
 import { navigate, routes } from '@redwoodjs/router'
-import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
+import { CellSuccessProps, CellFailureProps, useMutation } from '@redwoodjs/web'
+import { toast } from '@redwoodjs/web/dist/toast'
 
 import Pagination from 'src/lib/Pagination'
 
@@ -25,6 +26,14 @@ export const QUERY = gql`
   }
 `
 
+const DELETE_CONTACT_MUTATION = gql`
+  mutation DeleteContactMutation($id: Int!) {
+    deleteContact(id: $id) {
+      id
+    }
+  }
+`
+
 export const Loading = () => <div>Loading...</div>
 
 export const Empty = () => <div>Empty</div>
@@ -33,17 +42,44 @@ export const Failure = ({ error }: CellFailureProps) => (
   <div style={{ color: 'red' }}>Error: {error?.message}</div>
 )
 
-export const Success = ({ contactPage }: CellSuccessProps) => {
+export const Success = ({ contactPage, queryResult }: CellSuccessProps) => {
+  const { refetch } = queryResult
   const { contacts, count } = contactPage
+
+  const [deleteContact] = useMutation(DELETE_CONTACT_MUTATION, {
+    onCompleted: async () => {
+      toast.success(`Successfully Deleted!`)
+      refetch()
+    },
+    onError: (error) => {
+      toast.error(error.message)
+    },
+  })
+
+  const onDeleteContact = ({ id, name }) => {
+    if (confirm(`Remove ${name} from contacts?`)) {
+      deleteContact({
+        variables: { id: parseInt(id) },
+      })
+    }
+  }
 
   const headers = ['name', 'actions']
   const data = contacts.map((u) => {
+    const { user } = u
     return {
-      ...u.user,
+      ...user,
       actions: (
         <>
           <button className="btn-primary btn-sm btn">Chat</button>
-          <button className="btn-error btn-sm btn">Remove</button>
+          <button
+            className="btn-error btn-sm btn"
+            onClick={() => {
+              onDeleteContact({ id: u.id, name: user.name })
+            }}
+          >
+            Remove
+          </button>
         </>
       ),
     }
