@@ -1,8 +1,18 @@
+import { useAuth } from 'src/auth'
+
 type MainLayoutProps = {
   children?: React.ReactNode
 }
 
 const MainLayout = ({ children }: MainLayoutProps) => {
+  const { logOut } = useAuth()
+
+  const logOff = () => {
+    if (confirm('Are you sure to logout?')) {
+      logOut()
+    }
+  }
+
   return (
     <>
       <div className="drawer">
@@ -26,7 +36,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
                 <button>Sidebar Item 1</button>
               </li>
               <li>
-                <button>Sidebar Item 2</button>
+                <button onClick={logOff}>Logout</button>
               </li>
             </ul>
           </div>
