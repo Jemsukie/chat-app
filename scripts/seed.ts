@@ -22,6 +22,21 @@ export default async () => {
       "\nUsing the default './scripts/seed.{js,ts}' template\nEdit the file to add seed data\n"
     )
 
+    const quickMessages = [
+      { message: `I'm busy right now` },
+      { message: `I'm driving, get back to you later` },
+      { message: `I love youuuu!` },
+      { message: `Hi there! Are you busy?` },
+      { message: `Let's grab a coffee` },
+    ]
+
+    await Promise.all(
+      quickMessages.map(async (data: Prisma.ComposerCreateArgs['data']) => {
+        const record = await db.composer.create({ data })
+        console.log(record)
+      })
+    )
+
     // Note: if using PostgreSQL, using `createMany` to insert multiple records is much faster
     // @see: https://www.prisma.io/docs/reference/api-reference/prisma-client-reference#createmany
     Promise.all(

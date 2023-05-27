@@ -1,5 +1,6 @@
 import { MetaTags } from '@redwoodjs/web'
 
+import Chats from 'src/components/Chats/Chats'
 import ChatsCell from 'src/components/ChatsCell'
 const ChatWithUserPage = ({ userId }) => {
   return (
@@ -12,7 +13,8 @@ const ChatWithUserPage = ({ userId }) => {
       <div className="flex h-full w-full justify-center">
         <div className="flex w-full flex-col sm:w-3/4 md:w-1/2">
           <div className="h-screen w-full">
-            <ChatsCell userId={userId} />
+            {/* <ChatsCell userId={userId} /> */}
+            <Chats userId={userId} />
           </div>
         </div>
       </div>

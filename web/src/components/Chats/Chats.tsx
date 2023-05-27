@@ -1,19 +1,11 @@
 import { useMemo } from 'react'
 
-import { useMutation } from '@apollo/client'
-
-import { CellSuccessProps, CellFailureProps, useQuery } from '@redwoodjs/web'
+import { useMutation, useQuery } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/dist/toast'
 
-import Chats from '../ChatUtils/ChatUtils'
+import ChatUtils from '../ChatUtils/ChatUtils'
 
-export const beforeQuery = ({ userId }) => {
-  userId = userId ? parseInt(userId, 10) : 1
-
-  return { variables: { userId } }
-}
-
-export const QUERY = gql`
+const CHATS_BY_USER_QUERY = gql`
   query ChatsByUserQuery($userId: Int!) {
     chatsByUser(userId: $userId) {
       id
@@ -24,7 +16,7 @@ export const QUERY = gql`
   }
 `
 
-const CHECK_CONTACT = gql`
+const CHECK_CONTACT_QUERY = gql`
   query CheckContactQuery($id: Int!) {
     checkContact(id: $id)
   }
@@ -38,32 +30,30 @@ const CREATE_CONTACT_MUTATION = gql`
   }
 `
 
-export const Loading = () => <div>Loading...</div>
-
-export const Empty = () => <div>Empty</div>
-
-export const Failure = ({ error }: CellFailureProps) => (
-  <div style={{ color: 'red' }}>Error: {error?.message}</div>
-)
-
-export const Success = ({
-  chatsByUser,
-  userId,
-  queryResult,
-}: CellSuccessProps) => {
-  const { refetch } = queryResult
-
-  const { data, refetch: contacted } = useQuery(CHECK_CONTACT, {
-    onCompleted: ({ searchContacts }) => {
-      if (searchContacts.length > 0) {
-        toast.success('User found!')
-      }
-    },
-    onError: (error) => {
-      toast.error(error.message)
-    },
-    variables: { id: parseInt(userId) },
+const Chats = ({ userId }) => {
+  const { data, refetch } = useQuery(CHATS_BY_USER_QUERY, {
+    variables: { userId: parseInt(userId) },
   })
+  const chatsByUser = useMemo(() => {
+    if (!data) return []
+
+    return data.chatsByUser
+  }, [data])
+
+  const { data: toContact, refetch: contacted } = useQuery(
+    CHECK_CONTACT_QUERY,
+    {
+      onCompleted: ({ searchContacts }) => {
+        if (searchContacts.length > 0) {
+          toast.success('User found!')
+        }
+      },
+      onError: (error) => {
+        toast.error(error.message)
+      },
+      variables: { id: parseInt(userId) },
+    }
+  )
 
   // Mutation for adding a user as a contact
   const [createContact] = useMutation(CREATE_CONTACT_MUTATION, {
@@ -77,10 +67,10 @@ export const Success = ({
   })
 
   const isNotContact = useMemo(() => {
-    if (!data) return false
+    if (!toContact) return false
 
-    return !data.checkContact
-  }, [data])
+    return !toContact.checkContact
+  }, [toContact])
 
   const chatBox = chatsByUser.map((c, idx) => {
     return (
@@ -118,7 +108,9 @@ export const Success = ({
         {chatBox}
       </div>
 
-      <Chats refresh={refetch} userId={userId} />
+      <ChatUtils refresh={refetch} userId={userId} />
     </>
   )
 }
+
+export default Chats
