@@ -58,7 +58,7 @@ export const Success = ({ chatInbox }: CellSuccessProps) => {
 
   return (
     <>
-      <div className="bg-primary-content  p-5">
+      <div className="rounded-lg bg-primary-content p-5">
         <GenericTable data={data} headers={headers} />
       </div>
     </>

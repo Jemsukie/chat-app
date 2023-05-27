@@ -12,7 +12,7 @@ const ChatPage = () => {
       </div>
       <div className="flex h-full w-full justify-center">
         <div className="flex w-full flex-col sm:w-3/4 md:w-1/2">
-          <div className="h-3/4 w-full">
+          <div className="h-3/4 w-full overflow-x-auto">
             <ChatInboxCell />
           </div>
         </div>

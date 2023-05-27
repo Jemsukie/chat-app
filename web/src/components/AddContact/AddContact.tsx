@@ -113,9 +113,9 @@ const AddContact = () => {
 
   return (
     <div className="flex w-full justify-center">
-      <div className="flex flex-col">
+      <div className="flex w-1/2 flex-col items-center rounded-lg bg-primary-content p-5">
         Search Contact
-        <div className="form-control">
+        <div className="form-control rounded-lg bg-info p-5">
           <label className="input-group">
             {/* <Form onSubmit={onSubmit}> */}
             <input

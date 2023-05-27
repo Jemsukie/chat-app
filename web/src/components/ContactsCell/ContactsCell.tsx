@@ -107,7 +107,7 @@ export const Success = ({ contactPage, queryResult }: CellSuccessProps) => {
               Add Contact
             </button>
           </div>
-          <div className="bg-primary-content  p-5">
+          <div className="rounded-lg bg-primary-content p-5">
             <Pagination
               headers={headers}
               data={data}

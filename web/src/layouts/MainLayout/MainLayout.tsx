@@ -92,7 +92,7 @@ const Navbar = () => {
   const { isAuthenticated } = useAuth()
 
   return (
-    <div className="navbar  bg-primary text-white">
+    <div className="navbar bg-primary text-white">
       <div className="flex w-full">
         <div className="flex w-full justify-start">
           {isAuthenticated && (
