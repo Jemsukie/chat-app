@@ -46,6 +46,7 @@ export const Success = ({ contactPage, queryResult }: CellSuccessProps) => {
   const { refetch } = queryResult
   const { contacts, count } = contactPage
 
+  // Mutation for deleting contact
   const [deleteContact] = useMutation(DELETE_CONTACT_MUTATION, {
     onCompleted: async () => {
       toast.success(`Successfully Deleted!`)
@@ -71,7 +72,14 @@ export const Success = ({ contactPage, queryResult }: CellSuccessProps) => {
       ...user,
       actions: (
         <>
-          <button className="btn-primary btn-sm btn">Chat</button>
+          <button
+            className="btn-primary btn-sm btn"
+            onClick={() => {
+              navigate(routes.chatWithUser({ userId: user.id }))
+            }}
+          >
+            Chat
+          </button>
           <button
             className="btn-error btn-sm btn"
             onClick={() => {
@@ -88,7 +96,7 @@ export const Success = ({ contactPage, queryResult }: CellSuccessProps) => {
   return (
     <>
       <div className="flex w-full justify-center">
-        <div className="w-1/2">
+        <div className="w-full sm:w-3/4 md:w-1/2">
           <div className="flex justify-end">
             <button
               className="btn-success btn"
@@ -99,13 +107,14 @@ export const Success = ({ contactPage, queryResult }: CellSuccessProps) => {
               Add Contact
             </button>
           </div>
-
-          <Pagination
-            headers={headers}
-            data={data}
-            count={count}
-            link={'users'}
-          />
+          <div className="bg-primary-content  p-5">
+            <Pagination
+              headers={headers}
+              data={data}
+              count={count}
+              link={'users'}
+            />
+          </div>
         </div>
       </div>
     </>

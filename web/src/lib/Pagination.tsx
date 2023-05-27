@@ -3,14 +3,14 @@ import { navigate, routes } from '@redwoodjs/router'
 import GenericTable from './GenericTable'
 
 const Pagination = ({ headers, data, link, count }) => {
-  const ITEMS_PER_PAGE = 15
+  const ITEMS_PER_PAGE = 15 // Suppose we want to show 15 items per page
   const items = []
 
   for (let i = 0; i < Math.ceil(count / ITEMS_PER_PAGE); i++) {
     items.push(
       <li key={i}>
         <button
-          className="btn-ghost btn-sm btn"
+          className="btn-info btn-sm btn"
           onClick={() => {
             navigate(routes[link]({ page: i + 1 }), { replace: true })
           }}

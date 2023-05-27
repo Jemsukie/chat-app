@@ -1,4 +1,5 @@
 import { navigate, routes } from '@redwoodjs/router'
+import { Toaster } from '@redwoodjs/web/dist/toast'
 
 import { useAuth } from 'src/auth'
 
@@ -17,11 +18,12 @@ const MainLayout = ({ children }: MainLayoutProps) => {
 
   return (
     <>
+      <Toaster />
       <div className="drawer">
         {isAuthenticated && (
           <input id="my-drawer" type="checkbox" className="drawer-toggle" />
         )}
-        <div className="drawer-content">
+        <div className="drawer-content h-full">
           {/* <!-- Page content here --> */}
           <Navbar />
           {children}
@@ -47,7 +49,13 @@ const MainLayout = ({ children }: MainLayoutProps) => {
                   </button>
                 </li>
                 <li>
-                  <button>Chats</button>
+                  <button
+                    onClick={() => {
+                      navigate(routes.chats())
+                    }}
+                  >
+                    Chats
+                  </button>
                 </li>
                 <li>
                   <button onClick={logOff}>Logout</button>
@@ -81,7 +89,8 @@ const MenuIcon = () => {
 }
 
 const Navbar = () => {
-  const { isAuthenticated, currentUser } = useAuth()
+  const { isAuthenticated } = useAuth()
+
   return (
     <div className="navbar  bg-primary text-white">
       <div className="flex w-full">

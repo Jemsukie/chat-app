@@ -65,3 +65,15 @@ export const deleteContact = async ({ id }) => {
     },
   })
 }
+
+export const checkContact = async ({ id }) => {
+  const ownerId = context.currentUser.id
+  const result = await db.contact.findFirst({
+    where: {
+      ownerId,
+      userId: id,
+    },
+  })
+
+  return result ? true : false
+}

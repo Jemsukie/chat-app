@@ -28,9 +28,12 @@ const AddContact = () => {
   const [searchTerm, setSearchTerm] = useState('')
   const [term, setTerm] = useState(searchTerm)
 
+  // Query for searching a contact using a keyword
   const { data, loading } = useQuery(SEARCH_CONTACTS_QUERY, {
-    onCompleted: () => {
-      toast.success('User found!')
+    onCompleted: ({ searchContacts }) => {
+      if (searchContacts.length > 0) {
+        toast.success('User found!')
+      }
     },
     onError: (error) => {
       toast.error(error.message)
@@ -38,6 +41,7 @@ const AddContact = () => {
     variables: { searchTerm },
   })
 
+  // Mutation for adding a user as a contact
   const [createContact] = useMutation(CREATE_CONTACT_MUTATION, {
     onCompleted: async () => {
       toast.success(`Successfully Added!`)
@@ -66,31 +70,35 @@ const AddContact = () => {
     }
   }
 
+  // Let's highlight the searched string
+  const highlightString = (str) => {
+    const regex = new RegExp(`(${searchTerm})`, 'gi')
+    const parts = str.split(regex)
+    return parts.map((part, index) =>
+      part.toLowerCase() !== searchTerm.toLowerCase() ? (
+        part
+      ) : (
+        <span key={index} className="bg-warning">
+          {part}
+        </span>
+      )
+    )
+  }
+
+  // Let's create custom headers here
+  const headers = ['name', 'actions']
   const users = useMemo(
     () =>
       !data
         ? []
         : data.searchContacts.map((u) => {
-            const regex = new RegExp(`(${searchTerm})`, 'gi')
-            const parts = u.name.split(regex)
-            const highlightedName = parts.map((part, index) =>
-              part.toLowerCase() !== searchTerm.toLowerCase() ? (
-                part
-              ) : (
-                <span key={index} className="bg-warning">
-                  {part}
-                </span>
-              )
-            )
-
             return {
               ...u,
-              name: highlightedName,
+              name: highlightString(u.name),
               actions: (
                 <button
                   className="btn-primary btn-sm btn"
                   onClick={() => {
-                    console.log(u.id)
                     const { name, id } = u
                     onAddContact({ name, id })
                   }}
@@ -102,7 +110,6 @@ const AddContact = () => {
           }),
     [data, searchTerm]
   )
-  const headers = ['name', 'actions']
 
   return (
     <div className="flex w-full justify-center">

@@ -24,6 +24,9 @@ const Routes = () => {
           <Route path="/add-contact" page={AddContactPage} name="addContact" />
           <Route path="/users" page={UsersPage} name="users" />
           <Route path="/" page={HomePage} name="home" />
+          <Route path="/chats" page={ChatPage} name="chats" />
+
+          <Route path="/chat-with-user/{userId}" page={ChatWithUserPage} name="chatWithUser" />
         </Private>
         <Route notfound page={NotFoundPage} />
       </Set>

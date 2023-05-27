@@ -14,6 +14,7 @@ export const schema = gql`
     contacts: [Contact!]! @skipAuth
     contactPage(page: Int): ContactPage @skipAuth
     searchContacts(searchTerm: String!): [User!]! @skipAuth
+    checkContact(id: Int!): Boolean! @skipAuth
   }
 
   type Mutation {
