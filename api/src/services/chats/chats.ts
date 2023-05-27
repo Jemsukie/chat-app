@@ -46,6 +46,27 @@ export const createChat = async ({ input }) => {
   })
 }
 
+export const updateChat = async ({ input }) => {
+  const { id, message } = input
+
+  return await db.chat.update({
+    where: {
+      id,
+    },
+    data: {
+      message,
+    },
+  })
+}
+
+export const deleteChat = async ({ id }) => {
+  return await db.chat.delete({
+    where: {
+      id,
+    },
+  })
+}
+
 export const chatInbox = async () => {
   const ownerId = context.currentUser.id
 

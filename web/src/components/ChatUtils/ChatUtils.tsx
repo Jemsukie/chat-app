@@ -105,30 +105,21 @@ const Modal = ({ setValue }) => {
       <label htmlFor="modal-component" className="btn-success btn">
         Quick Message
       </label>
-      {/* Put this part before </body> tag */}
+      {/* Header */}
       <input type="checkbox" id="modal-component" className="modal-toggle" />
-      <div className="modal modal-bottom sm:modal-middle">
-        <div className="modal-box">
+      <label
+        htmlFor="modal-component"
+        className="modal modal-bottom sm:modal-middle"
+      >
+        <label className="modal-box relative" htmlFor="">
           <h3 className="text-lg font-bold">Pick a message</h3>
-          {/* <p className="py-4">
-            {`You've been selected for a chance to get one year of
-        subscription to use Wikipedia for free!`}
-          </p> */}
 
+          {/* This will be the body */}
           <div className="overflow-x-auto">
             <GenericTable headers={headers} data={data} />
           </div>
-
-          {/* <div className="modal-action">
-            <label htmlFor="modal-component" className="btn-success btn">
-              Yay!
-            </label>
-            <label htmlFor="modal-component" className="btn-success btn">
-              Wews!
-            </label>
-          </div> */}
-        </div>
-      </div>
+        </label>
+      </label>
     </>
   )
 }

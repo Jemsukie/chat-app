@@ -33,6 +33,11 @@ export const schema = gql`
     message: String!
   }
 
+  input UpdateChatInput {
+    id: Int!
+    message: String!
+  }
+
   type Query {
     chats: [Chat!]! @skipAuth
     chatsByUser(userId: Int!): [ChatsByUser]! @skipAuth
@@ -42,5 +47,7 @@ export const schema = gql`
 
   type Mutation {
     createChat(input: CreateChatInput!): Chat! @skipAuth
+    updateChat(input: UpdateChatInput!): Chat! @skipAuth
+    deleteChat(id: Int!): Chat! @skipAuth
   }
 `
