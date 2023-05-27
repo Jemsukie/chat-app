@@ -16,6 +16,25 @@ const MainLayout = ({ children }: MainLayoutProps) => {
     }
   }
 
+  const menuLinks = [
+    {
+      title: 'Chats',
+      function: () => {
+        navigate(routes.chats())
+      },
+    },
+    {
+      title: 'Contacts',
+      function: () => {
+        navigate(routes.users())
+      },
+    },
+    {
+      title: 'Logout',
+      function: logOff,
+    },
+  ]
+
   return (
     <>
       <Toaster />
@@ -39,27 +58,13 @@ const MainLayout = ({ children }: MainLayoutProps) => {
             <div className="menu w-80 bg-neutral-focus p-4 text-white">
               <ul>
                 {/* <!-- Sidebar content here --> */}
-                <li>
-                  <button
-                    onClick={() => {
-                      navigate(routes.users())
-                    }}
-                  >
-                    Contacts
-                  </button>
-                </li>
-                <li>
-                  <button
-                    onClick={() => {
-                      navigate(routes.chats())
-                    }}
-                  >
-                    Chats
-                  </button>
-                </li>
-                <li>
-                  <button onClick={logOff}>Logout</button>
-                </li>
+                {menuLinks.map((m, idx) => {
+                  return (
+                    <li key={idx}>
+                      <button onClick={m.function}>{m.title}</button>
+                    </li>
+                  )
+                })}
               </ul>
             </div>
           </div>
@@ -89,7 +94,7 @@ const MenuIcon = () => {
 }
 
 const Navbar = () => {
-  const { isAuthenticated } = useAuth()
+  const { isAuthenticated, currentUser } = useAuth()
 
   return (
     <div className="navbar bg-primary text-white">
@@ -100,6 +105,7 @@ const Navbar = () => {
               <label className="btn-ghost btn-circle btn" htmlFor="my-drawer">
                 <MenuIcon />
               </label>
+              {`Hello ${currentUser.name}!`}
             </div>
           )}
         </div>

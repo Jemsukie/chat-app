@@ -12,7 +12,7 @@ const HomePage = () => {
       </p>
       <p className="text-primary">
         My default route is named <code>home</code>, link to me with `
-        <Link to={routes.home()}>Home</Link>`
+        <Link to={routes.chats()}>Home</Link>`
       </p>
     </>
   )
