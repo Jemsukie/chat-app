@@ -40,6 +40,7 @@ model User {
   resetTokenExpiresAt DateTime?
   contactOwner        Contact[]      @relation("owner")
   contactUser         Contact[]      @relation("user")
+  roles               String         @default("regular")
 }
 
 model Contact {
