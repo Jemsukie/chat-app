@@ -55,8 +55,20 @@ const MainLayout = ({ children }: MainLayoutProps) => {
               {''}
             </label>
 
-            <div className="menu w-80 bg-neutral-focus p-4 text-white">
-              <ul>
+            <div className="menu h-full w-80 bg-neutral-focus p-0 text-white">
+              <div className="navbar bg-slate-500 text-white">
+                {isAuthenticated && (
+                  <div className="flex w-full justify-end">
+                    <label
+                      className="btn-ghost btn-circle btn"
+                      htmlFor="my-drawer"
+                    >
+                      <MenuIcon />
+                    </label>
+                  </div>
+                )}
+              </div>
+              <ul className=" p-4">
                 {/* <!-- Sidebar content here --> */}
                 {menuLinks.map((m, idx) => {
                   return (
@@ -74,7 +86,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
   )
 }
 
-const MenuIcon = () => {
+export const MenuIcon = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

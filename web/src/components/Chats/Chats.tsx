@@ -125,11 +125,9 @@ const Chats = ({ userId }) => {
     })
   }
 
-  const onDelete = (id) => {
-    if (confirm('Are you sure to delete this message?')) {
-      deleteChat({ variables: { id } })
-    }
-  }
+  const onDelete = (id) =>
+    confirm('Are you sure to delete this message?') &&
+    deleteChat({ variables: { id } })
 
   const handleMouseEnter = (id) => {
     setHoveredMessage(id)
@@ -143,45 +141,27 @@ const Chats = ({ userId }) => {
   }
 
   const chatBox = chatsByUser.map((c, idx) => {
+    const isSent = c.remark === 'Sent'
+    const pos = isSent ? 'end' : 'start'
+    const color = isSent ? 'primary' : 'success'
+
     return (
-      <div
-        className={`chat chat-${c.remark === 'Sent' ? 'end' : 'start'}`}
-        key={idx}
-      >
+      <div className={`chat chat-${pos}`} key={idx}>
         <div
-          className={`chat-bubble chat-bubble-${
-            c.remark === 'Sent' ? 'primary' : 'success'
-          }`}
-          onMouseEnter={() => {
-            if (c.remark === 'Sent') {
-              handleMouseEnter(idx)
-            }
-          }}
-          onMouseLeave={() => {
-            if (c.remark === 'Sent') {
-              handleMouseLeave()
-            }
-          }}
-          style={{
-            cursor: 'pointer',
-          }}
+          className={`chat-bubble chat-bubble-${color}`}
+          onMouseEnter={() => isSent && handleMouseEnter(idx)}
+          onMouseLeave={() => isSent && handleMouseLeave()}
+          style={{ cursor: 'pointer' }}
         >
           {c.message}
           {isHovered && hoveredMessage === idx && (
             <div>
-              <button
-                className="badge-info badge"
-                onClick={() => {
-                  onEdit(c.id)
-                }}
-              >
+              <button className="badge badge-info" onClick={() => onEdit(c.id)}>
                 Edit
               </button>
               <button
-                className="badge-error badge"
-                onClick={() => {
-                  onDelete(c.id)
-                }}
+                className="badge badge-error"
+                onClick={() => onDelete(c.id)}
               >
                 Delete
               </button>
@@ -196,12 +176,11 @@ const Chats = ({ userId }) => {
     <>
       {isNotContact && (
         <button
-          className="badge-primary badge"
-          onClick={() => {
-            if (confirm('Add this to contact?')) {
-              createContact({ variables: { id: parseInt(userId) } })
-            }
-          }}
+          className="badge badge-primary"
+          onClick={() =>
+            confirm('Add this to contact?') &&
+            createContact({ variables: { id: parseInt(userId) } })
+          }
         >
           Add to Contact?
         </button>
