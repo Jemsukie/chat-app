@@ -8,7 +8,7 @@ type MainLayoutProps = {
 }
 
 const MainLayout = ({ children }: MainLayoutProps) => {
-  const { logOut, isAuthenticated } = useAuth()
+  const { logOut, isAuthenticated, currentUser } = useAuth()
 
   const logOff = () => {
     if (confirm('Are you sure to logout?')) {
@@ -16,24 +16,14 @@ const MainLayout = ({ children }: MainLayoutProps) => {
     }
   }
 
-  const menuLinks = [
-    {
-      title: 'Chats',
-      function: () => {
-        navigate(routes.chats())
-      },
-    },
-    {
-      title: 'Contacts',
-      function: () => {
-        navigate(routes.users())
-      },
-    },
-    {
-      title: 'Logout',
-      function: logOff,
-    },
-  ]
+  const menuLinks = {
+    Chats: () => navigate(routes.chats()),
+    Contacts: () => navigate(routes.users()),
+    ...(currentUser?.roles === 'admin' && {
+      'Blast Message': () => navigate(routes.blast()),
+    }),
+    Logout: logOff,
+  }
 
   return (
     <>
@@ -70,10 +60,10 @@ const MainLayout = ({ children }: MainLayoutProps) => {
               </div>
               <ul className=" p-4">
                 {/* <!-- Sidebar content here --> */}
-                {menuLinks.map((m, idx) => {
+                {Object.entries(menuLinks).map(([key, value]) => {
                   return (
-                    <li key={idx}>
-                      <button onClick={m.function}>{m.title}</button>
+                    <li key={key}>
+                      <button onClick={value}>{key}</button>
                     </li>
                   )
                 })}

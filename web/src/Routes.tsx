@@ -20,12 +20,15 @@ const Routes = () => {
         <Route path="/signup" page={SignupPage} name="signup" />
         <Route path="/forgot-password" page={ForgotPasswordPage} name="forgotPassword" />
         <Route path="/reset-password" page={ResetPasswordPage} name="resetPassword" />
+
         <Private unauthenticated="login">
-          <Route path="/add-contact" page={AddContactPage} name="addContact" />
-          <Route path="/users" page={UsersPage} name="users" />
+          <Set private unauthenticated="chats" roles="admin">
+            <Route path="/blast" page={BlastPage} name="blast" />
+          </Set>
 
           <Route path="/" page={ChatPage} name="chats" />
-
+          <Route path="/users" page={UsersPage} name="users" />
+          <Route path="/add-contact" page={AddContactPage} name="addContact" />
           <Route path="/chat-with-user/{userId}" page={ChatWithUserPage} name="chatWithUser" />
         </Private>
         <Route notfound page={NotFoundPage} />

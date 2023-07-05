@@ -1,7 +1,6 @@
 import { render } from '@redwoodjs/testing/web'
 
-import { Loading, Empty, Failure, Success } from './ChatInboxCell'
-import { standard } from './ChatInboxCell.mock'
+import { Loading, Empty, Failure, Success } from './ChatManyCell'
 
 // Generated boilerplate tests do not account for all circumstances
 // and can fail without adjustments, e.g. Float and DateTime types.
@@ -9,7 +8,7 @@ import { standard } from './ChatInboxCell.mock'
 //        https://redwoodjs.com/docs/testing#testing-cells
 // https://redwoodjs.com/docs/testing#jest-expect-type-considerations
 
-describe('ChatInboxCell', () => {
+describe('ChatManyCell', () => {
   it('renders Loading successfully', () => {
     expect(() => {
       render(<Loading />)
@@ -36,7 +35,7 @@ describe('ChatInboxCell', () => {
 
   it('renders Success successfully', async () => {
     expect(() => {
-      render(<Success chatInbox={standard().chatInbox} />)
+      render(<Success />)
     }).not.toThrow()
   })
 })

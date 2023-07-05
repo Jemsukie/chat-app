@@ -14,9 +14,10 @@
 import type { ComponentMeta } from '@storybook/react'
 
 import Chats from './ChatUtils'
+import { standard } from './ChatUtils.mock'
 
 export const generated = () => {
-  return <Chats refresh={() => {}} userId={1} />
+  return <Chats {...standard()} />
 }
 
 export default {

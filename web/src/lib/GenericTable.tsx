@@ -5,7 +5,11 @@ const GenericTable = ({ headers, data }) => {
         <thead>
           <tr>
             {headers.map((h, idx) => {
-              return <th key={idx}>{h}</th>
+              return (
+                <th className="capitalize" key={idx}>
+                  {h}
+                </th>
+              )
             })}
           </tr>
         </thead>

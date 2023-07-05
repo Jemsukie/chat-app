@@ -40,7 +40,7 @@ export const Success = ({ chatInbox }: CellSuccessProps) => {
       message: (
         <>
           {shortenString(c.message)}
-          {c.remark === 'Sent' && <div className="badge badge-info">You</div>}
+          {c.remark === 'Sent' && <div className="badge-info badge">You</div>}
         </>
       ),
       actions: (

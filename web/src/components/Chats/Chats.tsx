@@ -156,11 +156,11 @@ const Chats = ({ userId }) => {
           {c.message}
           {isHovered && hoveredMessage === idx && (
             <div>
-              <button className="badge badge-info" onClick={() => onEdit(c.id)}>
+              <button className="badge-info badge" onClick={() => onEdit(c.id)}>
                 Edit
               </button>
               <button
-                className="badge badge-error"
+                className="badge-error badge"
                 onClick={() => onDelete(c.id)}
               >
                 Delete
@@ -176,7 +176,7 @@ const Chats = ({ userId }) => {
     <>
       {isNotContact && (
         <button
-          className="badge badge-primary"
+          className="badge-primary badge"
           onClick={() =>
             confirm('Add this to contact?') &&
             createContact({ variables: { id: parseInt(userId) } })
@@ -190,7 +190,7 @@ const Chats = ({ userId }) => {
         {chatBox}
       </div>
 
-      <ChatUtils refresh={refetch} userId={userId} />
+      <ChatUtils refresh={refetch} userIds={[...userId]} />
     </>
   )
 }

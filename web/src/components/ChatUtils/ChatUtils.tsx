@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 
 import { Form, Submit, TextAreaField, useForm } from '@redwoodjs/forms'
 import { useMutation, useQuery } from '@redwoodjs/web'
@@ -24,9 +24,11 @@ const COMPOSERS_QUERY = gql`
   }
 `
 
-const ChatUtils = ({ refresh, userId }) => {
+const ChatUtils = ({ refresh, userIds }) => {
   const formMethods = useForm()
   const { setValue } = formMethods
+  const noRecipient = userIds.length === 0
+  const [loading, setLoading] = useState(false)
 
   const [createChat] = useMutation(CREATE_CHAT_MUTATION, {
     onCompleted: async () => {
@@ -39,17 +41,22 @@ const ChatUtils = ({ refresh, userId }) => {
     },
   })
 
-  const onSendMessage = (data) => {
+  const onSendMessage = async (data) => {
     const { message } = data
+    setLoading(true)
 
-    createChat({
-      variables: {
-        input: {
-          userId: parseInt(userId),
-          message,
-        },
-      },
-    })
+    await Promise.all(
+      userIds.map((u) =>
+        createChat({
+          variables: {
+            input: {
+              userId: parseInt(u),
+              message,
+            },
+          },
+        })
+      )
+    ).finally(() => setLoading(false))
   }
 
   return (
@@ -61,9 +68,12 @@ const ChatUtils = ({ refresh, userId }) => {
           errorClassName="textarea-primary textarea w-full border border-error"
           validation={{ required: true }}
           placeholder="Enter Message"
+          readOnly={noRecipient || loading}
         />
         <Modal setValue={setValue} />
-        <Submit className="btn-primary btn">Send</Submit>
+        <Submit className="btn-primary btn" disabled={noRecipient || loading}>
+          Send
+        </Submit>
       </Form>
     </>
   )
