@@ -11,14 +11,14 @@ export const schema = gql`
   }
 
   type Query {
-    contacts: [Contact!]! @skipAuth
-    contactPage(page: Int): ContactPage @skipAuth
-    searchContacts(searchTerm: String!): [User!]! @skipAuth
-    checkContact(id: Int!): Boolean! @skipAuth
+    contacts: [Contact!]! @requireAuth
+    contactPage(page: Int): ContactPage @requireAuth
+    searchContacts(searchTerm: String!): [User!]! @requireAuth
+    checkContact(id: Int!): Boolean! @requireAuth
   }
 
   type Mutation {
-    createContact(id: Int!): Contact! @skipAuth
-    deleteContact(id: Int!): Contact @skipAuth
+    createContact(id: Int!): Contact! @requireAuth
+    deleteContact(id: Int!): Contact @requireAuth
   }
 `

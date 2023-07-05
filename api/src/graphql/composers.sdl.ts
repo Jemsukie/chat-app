@@ -5,6 +5,6 @@ export const schema = gql`
   }
 
   type Query {
-    composers: [Composer!]! @skipAuth
+    composers: [Composer!]! @requireAuth
   }
 `

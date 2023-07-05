@@ -39,15 +39,13 @@ export const schema = gql`
   }
 
   type Query {
-    chats: [Chat!]! @skipAuth
-    chatsByUser(userId: Int!): [ChatsByUser]! @skipAuth
-    chatPage(page: Int): ChatPage @skipAuth
-    chatInbox: [ChatInbox]! @skipAuth
+    chatsByUser(userId: Int!): [ChatsByUser]! @requireAuth
+    chatInbox: [ChatInbox]! @requireAuth
   }
 
   type Mutation {
-    createChat(input: CreateChatInput!): Chat! @skipAuth
-    updateChat(input: UpdateChatInput!): Chat! @skipAuth
-    deleteChat(id: Int!): Chat! @skipAuth
+    createChat(input: CreateChatInput!): Chat! @requireAuth
+    updateChat(input: UpdateChatInput!): Chat! @requireAuth
+    deleteChat(id: Int!): Chat! @requireAuth
   }
 `
