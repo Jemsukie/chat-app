@@ -142,13 +142,13 @@ const Chats = ({ userId }) => {
 
   const chatBox = chatsByUser.map((c, idx) => {
     const isSent = c.remark === 'Sent'
-    const pos = isSent ? 'end' : 'start'
-    const color = isSent ? 'primary' : 'success'
+    const pos = isSent ? 'chat-end' : 'chat-start'
+    const color = isSent ? 'chat-bubble-primary' : 'chat-bubble-success'
 
     return (
-      <div className={`chat chat-${pos}`} key={idx}>
+      <div className={`chat ${pos}`} key={idx}>
         <div
-          className={`chat-bubble chat-bubble-${color}`}
+          className={`chat-bubble ${color}`}
           onMouseEnter={() => isSent && handleMouseEnter(idx)}
           onMouseLeave={() => isSent && handleMouseLeave()}
           style={{ cursor: 'pointer' }}
@@ -156,11 +156,11 @@ const Chats = ({ userId }) => {
           {c.message}
           {isHovered && hoveredMessage === idx && (
             <div>
-              <button className="badge-info badge" onClick={() => onEdit(c.id)}>
+              <button className="badge badge-info" onClick={() => onEdit(c.id)}>
                 Edit
               </button>
               <button
-                className="badge-error badge"
+                className="badge badge-error"
                 onClick={() => onDelete(c.id)}
               >
                 Delete
@@ -176,7 +176,7 @@ const Chats = ({ userId }) => {
     <>
       {isNotContact && (
         <button
-          className="badge-primary badge"
+          className="badge badge-primary"
           onClick={() =>
             confirm('Add this to contact?') &&
             createContact({ variables: { id: parseInt(userId) } })
