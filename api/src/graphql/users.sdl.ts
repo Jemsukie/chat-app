@@ -16,4 +16,8 @@ export const schema = gql`
     searchUsers(searchTerm: String!): [User!]! @requireAuth
     userPage(page: Int): UserPage @requireAuth
   }
+
+  type Mutation {
+    emailResetPasswordLink(username: String!): User! @skipAuth
+  }
 `

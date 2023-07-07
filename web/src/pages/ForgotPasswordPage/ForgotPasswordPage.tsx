@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { Form, Label, TextField, Submit, FieldError } from '@redwoodjs/forms'
 import { navigate, routes } from '@redwoodjs/router'
@@ -9,6 +9,8 @@ import { useAuth } from 'src/auth'
 
 const ForgotPasswordPage = () => {
   const { isAuthenticated, forgotPassword } = useAuth()
+  const [enabled, setEnabled] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -22,16 +24,21 @@ const ForgotPasswordPage = () => {
   }, [])
 
   const onSubmit = async (data: { email: string }) => {
+    setEnabled(false)
+    setLoading(true)
     const response = await forgotPassword(data.email)
 
     if (response.error) {
       toast.error(response.error)
+      setEnabled(true)
+      setLoading(false)
     } else {
       // The function `forgotPassword.handler` in api/src/functions/auth.js has
       // been invoked, let the user know how to get the link to reset their
       // password (sent in email, perhaps?)
+
       toast.success(
-        'A link to reset your password was sent to ' + response.email
+        'A link to reset your password was sent to ' + response.username
       )
       navigate(routes.login())
     }
@@ -73,13 +80,20 @@ const ForgotPasswordPage = () => {
                           message: 'Email is required',
                         },
                       }}
+                      disabled={loading}
+                      onInput={(e) => setEnabled(e.currentTarget.value !== '')}
                     />
 
                     <FieldError name="email" className="rw-field-error" />
                   </div>
 
                   <div className="rw-button-group">
-                    <Submit className="rw-button rw-button-blue">Submit</Submit>
+                    <Submit
+                      className="rw-button rw-button-blue"
+                      disabled={!enabled || loading}
+                    >
+                      {loading ? 'Loading...' : 'Submit'}
+                    </Submit>
                   </div>
                 </Form>
               </div>

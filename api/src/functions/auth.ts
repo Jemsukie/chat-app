@@ -3,6 +3,7 @@ import type { APIGatewayProxyEvent, Context } from 'aws-lambda'
 import { DbAuthHandler, DbAuthHandlerOptions } from '@redwoodjs/auth-dbauth-api'
 
 import { db } from 'src/lib/db'
+import { emailResetPasswordLink } from 'src/services/users/users'
 
 export const handler = async (
   event: APIGatewayProxyEvent,
@@ -21,7 +22,11 @@ export const handler = async (
     // You could use this return value to, for example, show the email
     // address in a toast message so the user will know it worked and where
     // to look for the email.
-    handler: (user) => {
+    handler: async (user) => {
+      const resetLink = `${event.headers.origin}/reset-password?resetToken=${user.resetToken}`
+      const { username } = user
+
+      await emailResetPasswordLink({ username, resetLink })
       return user
     },
 
