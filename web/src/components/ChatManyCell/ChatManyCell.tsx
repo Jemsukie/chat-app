@@ -45,12 +45,12 @@ export const Success = ({ contactPage, queryResult }: CellSuccessProps) => {
     const isIdIncluded = userIds.includes(user.id)
     const includeId = () =>
       isIdIncluded ? removeRecipient(user.id) : addRecipient(user.id)
-    const color = isIdIncluded ? 'error' : 'success'
+    const color = isIdIncluded ? 'btn-error' : 'btn-success'
 
     return {
       ...user,
       actions: (
-        <button className={`btn-${color}  btn-sm btn`} onClick={includeId}>
+        <button className={`${color}  btn-sm btn`} onClick={includeId}>
           {isIdIncluded ? '-' : '+'}
         </button>
       ),
