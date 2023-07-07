@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { useEffect } from 'react'
 
 import {
@@ -17,6 +17,7 @@ import { useAuth } from 'src/auth'
 
 const SignupPage = () => {
   const { isAuthenticated, signUp } = useAuth()
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -32,6 +33,7 @@ const SignupPage = () => {
   }, [])
 
   const onSubmit = async (data: Record<string, string>) => {
+    setLoading(true)
     const response = await signUp({
       username: data.email,
       name: data.name,
@@ -46,6 +48,7 @@ const SignupPage = () => {
       // user is signed in automatically
       toast.success('Welcome!')
     }
+    setLoading(false)
   }
 
   return (
@@ -126,8 +129,11 @@ const SignupPage = () => {
                   <FieldError name="password" className="rw-field-error" />
 
                   <div className="rw-button-group">
-                    <Submit className="rw-button rw-button-blue">
-                      Sign Up
+                    <Submit
+                      className="rw-button rw-button-blue"
+                      disabled={loading}
+                    >
+                      {loading ? 'Loading...' : 'Sign Up'}
                     </Submit>
                   </div>
                 </Form>
