@@ -1,4 +1,4 @@
-import * as dataServices from 'src/data-services/users'
+import * as dataServices from 'src/data-services/users/users'
 
 export const users = async () => {
   return await dataServices.users()

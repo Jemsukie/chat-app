@@ -1,3 +1,5 @@
-import { db } from 'src/lib/db'
+import * as dataServices from 'src/data-services/composers/composers'
 
-export const composers = async () => await db.composer.findMany()
+export const composers = async () => {
+  return await dataServices.composers()
+}
