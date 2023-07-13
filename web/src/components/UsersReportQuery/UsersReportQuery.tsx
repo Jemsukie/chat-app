@@ -27,18 +27,7 @@ export const Empty = () => <>Empty</>
 export const Success = (props: UseCubeQueryResult<unknown>) => {
   const { resultSet } = props
 
-  // const colNames = {
-  //   'Delivery.id': t('ReportPage.DeliveryId'),
-  //   'Delivery.deliverystatus': 'Status',
-  //   'Delivery.deliverydatetime': 'Date And Time',
-  // }
-
   const data = resultSet.tablePivot()
-  console.log('--this is data', JSON.stringify(data))
-  // const columns = Object.keys(colNames).map((cn) => ({
-  //   ...resultSet.tableColumns().find((rCol) => rCol.key === cn),
-  //   shortTitle: colNames[cn],
-  // }))
 
   return <>{JSON.stringify(data)}</>
 }
