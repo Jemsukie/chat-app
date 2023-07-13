@@ -5,6 +5,9 @@ import { useMutation, useQuery } from '@redwoodjs/web'
 import { toast } from '@redwoodjs/web/toast'
 
 import GenericTable from 'src/lib/GenericTable'
+import { ReportQuery } from 'src/lib/ReportQuery'
+
+import * as UsersReportQuery from '../UsersReportQuery/UsersReportQuery'
 
 const SEARCH_CONTACTS_QUERY = gql`
   query SearchContactsQuery($searchTerm: String!) {
@@ -114,7 +117,7 @@ const AddContact = () => {
   return (
     <div className="flex w-full justify-center">
       <div className="flex w-1/2 flex-col items-center rounded-lg bg-primary-content p-5">
-        Search Contact
+        Search Contact Numbers: <ReportQuery {...UsersReportQuery} />
         <div className="form-control rounded-lg bg-info p-5">
           <label className="input-group">
             {/* <Form onSubmit={onSubmit}> */}

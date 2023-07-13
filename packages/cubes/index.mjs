@@ -1,6 +1,14 @@
 import CubejsServer from '@cubejs-backend/server'
 
-const server = new CubejsServer()
+const server = new CubejsServer({
+  http: {
+    cors: {
+      // TODO: from .env to dapat i-set sa production
+      origin: [process.env.CORS_ALLOWED_ORIGIN],
+      credentials: true,
+    },
+  },
+})
 
 server
   .listen()
