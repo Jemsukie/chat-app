@@ -1,0 +1,20 @@
+{
+  "name": "cubes",
+  "private": true,
+  "main": "index.mjs",
+  "type": "module",
+  "packageManager": "yarn@3.2.0",
+  "devDependencies": {
+    "@cubejs-backend/postgres-driver": "^0.30.34",
+    "@cubejs-backend/server": "^0.30.37"
+  },
+  "scripts": {
+    "start": "node index.mjs"
+  },
+  "eslintConfig": {
+    "env": {
+      "browser": false,
+      "node": true
+    }
+  }
+}
