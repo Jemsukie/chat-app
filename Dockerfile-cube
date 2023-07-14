@@ -1,0 +1,8 @@
+FROM cubejs/cube:latest
+
+WORKDIR /cube/conf
+
+COPY packages/cubes .
+RUN npm install
+
+CMD ["node", "index.mjs"]

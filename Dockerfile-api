@@ -1,0 +1,24 @@
+FROM node:18.15-slim
+
+WORKDIR /app
+
+COPY api/package.json api/
+COPY package.json .
+COPY redwood.toml .
+COPY yarn.lock .
+COPY .yarn .yarn
+COPY .yarnrc.yml .yarnrc.yml
+
+RUN yarn install
+# should add this due to pre-render
+RUN yarn add react react-dom
+COPY api api
+RUN yarn rw build api
+RUN rm -rf ./api/src
+
+WORKDIR /app/api
+
+EXPOSE 8080
+
+# ENTRYPOINT [ "yarn", "rw", "serve", "api", "--port", "8080" ]
+ENTRYPOINT ["/bin/sh","-c", "yarn rw prisma migrate deploy; yarn rw serve api --port 8080"]
