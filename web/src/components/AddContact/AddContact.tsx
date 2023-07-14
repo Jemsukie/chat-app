@@ -100,7 +100,7 @@ const AddContact = () => {
               name: highlightString(u.name),
               actions: (
                 <button
-                  className="btn-primary btn-sm btn"
+                  className="btn btn-primary btn-sm"
                   onClick={() => {
                     const { name, id } = u
                     onAddContact({ name, id })
@@ -123,14 +123,14 @@ const AddContact = () => {
             {/* <Form onSubmit={onSubmit}> */}
             <input
               type="text"
-              className="input-bordered input"
+              className="input input-bordered"
               name="searchTerm"
               onChange={(e) => {
                 setTerm(e.target.value)
               }}
             />
             <button
-              className="btn-primary btn"
+              className="btn btn-primary"
               onClick={onSearch}
               disabled={loading}
             >

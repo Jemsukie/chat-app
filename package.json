@@ -9,11 +9,13 @@
   },
   "scripts": {
     "prepare": "husky install",
-    "start.cubes": "yarn workspace cubes start"
+    "start.cubes": "yarn workspace cubes start",
+    "start.web": "concurrently --kill-others-on-fail \"yarn rw dev\" \"yarn start.cubes\""
   },
   "devDependencies": {
     "@redwoodjs/auth-dbauth-setup": "5.2.2",
     "@redwoodjs/core": "5.2.2",
+    "concurrently": "^8.2.0",
     "prettier-plugin-tailwindcss": "^0.2.3"
   },
   "eslintConfig": {
