@@ -5,8 +5,8 @@
   "type": "module",
   "packageManager": "yarn@3.2.0",
   "devDependencies": {
-    "@cubejs-backend/postgres-driver": "^0.30.34",
-    "@cubejs-backend/server": "^0.30.37"
+    "@cubejs-backend/postgres-driver": "^0.33.36",
+    "@cubejs-backend/server": "^0.33.36"
   },
   "scripts": {
     "start": "node index.mjs"
