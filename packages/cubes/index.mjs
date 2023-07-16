@@ -1,25 +1,21 @@
-// cronJob.js
-
 import CubejsServer from '@cubejs-backend/server'
 
-const cubejsCronJob = async () => {
-  const server = new CubejsServer({
-    http: {
-      cors: {
-        // TODO: Set this to the appropriate value in production
-        origin: [process.env.CORS_ALLOWED_ORIGIN],
-        credentials: true,
-      },
+const server = new CubejsServer({
+  http: {
+    cors: {
+      // TODO: from .env to dapat i-set sa production
+      origin: [process.env.CORS_ALLOWED_ORIGIN],
+      credentials: true,
     },
-  })
+  },
+})
 
-  try {
-    const { version, port } = await server.listen()
+server
+  .listen()
+  .then(({ version, port }) => {
     console.log(`🚀 Cube.js server (${version}) is listening on ${port}`)
-  } catch (e) {
+  })
+  .catch((e) => {
     console.error('Fatal error during server start: ')
     console.error(e.stack || e)
-  }
-}
-
-export default cubejsCronJob
+  })
